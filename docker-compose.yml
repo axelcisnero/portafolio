@@ -10,4 +10,9 @@ services:
     environment:
       - DATABASE_URL=file:/app/data/prod.db
     volumes:
-      - ./data:/app/data
+      # Volumen administrado por Docker: hereda permisos del usuario del contenedor.
+      # Respaldo: docker cp axel-portfolio:/app/data/prod.db ./prod-backup.db
+      - portfolio-data:/app/data
+
+volumes:
+  portfolio-data:
