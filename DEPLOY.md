@@ -81,9 +81,9 @@ docker compose logs -f          # verifica que arrancó
 curl -I http://localhost:3000   # debe responder 200/307
 ```
 
-La base de datos SQLite queda en `/opt/portfolio/data/prod.db` (persiste entre
-reinicios y actualizaciones, montada como volumen). La primera vez se crean los
-datos de ejemplo; edítalos o bórralos desde `/admin`.
+La base de datos SQLite vive en el volumen Docker `portafolio_portfolio-data`
+(persiste entre reinicios y actualizaciones). La primera vez se crean los datos
+de ejemplo; edítalos o bórralos desde `/admin`.
 
 > **Puertos:** el portafolio usa el `3000`. Si tu agente ya usa ese puerto, cambia
 > el mapeo en `docker-compose.yml` (ej. `"3001:3000"`) y ajusta el `proxy_pass` del
@@ -157,18 +157,19 @@ docker compose up -d
 
 ## 8. Respaldo de la base de datos
 
-Todo (reseñas y proyectos) vive en un solo archivo:
+Todo (reseñas, proyectos, foto de perfil) vive en un solo archivo dentro del
+volumen Docker. Se copia con `docker cp`:
 
 ```bash
 mkdir -p /opt/backups
-cp /opt/portfolio/data/prod.db /opt/backups/prod-$(date +%F).db
+docker cp axel-portfolio:/app/data/prod.db /opt/backups/prod-$(date +%F).db
 ```
 
 Automático con cron (diario, 3 a.m.):
 
 ```bash
 crontab -e
-0 3 * * * cp /opt/portfolio/data/prod.db /opt/backups/prod-$(date +\%F).db
+0 3 * * * docker cp axel-portfolio:/app/data/prod.db /opt/backups/prod-$(date +\%F).db
 ```
 
 ---
