@@ -32,6 +32,24 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# base de datos SQLite
+*.db
+*.db-journal
+prisma/*.db
+
+# documentos personales
+/docs
+
+# datos de despliegue
+/data
+
+# plantilla original (solo referencia local, no se despliega)
+/Hoja De Vida
+
+# configuración local de herramientas
+/.claude
 
 # vercel
 .vercel

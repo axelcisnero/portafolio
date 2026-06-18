@@ -1,0 +1,13 @@
+services:
+  portfolio:
+    build: .
+    container_name: axel-portfolio
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    environment:
+      - DATABASE_URL=file:/app/data/prod.db
+    volumes:
+      - ./data:/app/data

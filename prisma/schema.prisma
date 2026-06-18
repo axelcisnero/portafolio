@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  place     String
+  loc       String
+  stars     Int      @default(5)
+  text      String
+  textEn    String?
+  img       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id        String   @id @default(cuid())
+  name      String
+  cat       String
+  catEn     String?
+  url       String
+  desc      String
+  descEn    String?
+  img       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Ajustes simples clave/valor (ej. foto de perfil como dataURL)
+model Setting {
+  key   String @id
+  value String
+}

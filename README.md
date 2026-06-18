@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hoja de Vida — Axel Cisnero
 
-## Getting Started
+Portafolio profesional bilingüe (ES/EN) basado en la plantilla **"Hoja de Vida"**,
+portada a Next.js con reseñas y proyectos gestionados desde una base de datos y
+login con Clerk.
 
-First, run the development server:
+## ✨ Características
+
+- **CV completo**: perfil, experiencia (timeline), educación, habilidades.
+- **Proyectos**: tarjetas con miniatura automática del sitio (thum.io); los
+  visitantes hacen clic y abren el sitio real. Se gestionan desde `/admin`.
+- **Reseñas**: lugares visitados y comida, con estrellas y foto. Las publicas tú
+  y **las ven todos los visitantes** (guardadas en base de datos).
+- **Login con Clerk**: solo los correos en `ADMIN_EMAILS` acceden a `/admin`.
+- **Bilingüe ES/EN**, **tema claro/oscuro**, **botón flotante de WhatsApp** y
+  formulario de contacto (abre el correo del visitante).
+- **Diseño fiel a la plantilla**: fuentes Space Grotesk / Manrope, theming por
+  variables CSS (`data-dark`, `data-accent`).
+
+## 🛠️ Stack
+
+Next.js 15 (App Router) · TypeScript · CSS de la plantilla · Clerk ·
+Prisma + SQLite · next/font
+
+## 🚀 Desarrollo local
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+
+# .env ya tiene tus claves de Clerk (dev) y ADMIN_EMAILS.
+npx prisma db push      # crea la base de datos
+node prisma/seed.mjs    # datos de ejemplo (tus proyectos y reseñas)
+
+npm run dev             # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Inicia sesión con un correo de `ADMIN_EMAILS` y entra a `/admin` para gestionar
+reseñas y proyectos.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Estructura
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  app/
+    page.tsx          # Página principal (plantilla + datos de la BD)
+    cv-styles.css     # CSS de la plantilla (copiado de "Hoja De Vida")
+    cv-admin.css      # CSS de modales/panel
+    admin/            # Panel /admin protegido con Clerk + server actions
+  components/
+    CVScripts.tsx     # Interacciones (nav, i18n, tema, estrellas, reveal, form)
+  lib/                # Prisma, verificación de admin
+prisma/
+  schema.prisma       # Modelos Review y Project
+  seed.mjs            # Datos iniciales
+public/assets/        # Foto y CV en PDF
+"Hoja De Vida"/       # Plantilla original (referencia; no se sirve)
+```
 
-## Learn More
+## 🌐 Despliegue
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Ver [DEPLOY.md](DEPLOY.md) — guía para VPS con Docker, Nginx y HTTPS,
+**conviviendo con tu agente de IA** en el mismo servidor.
