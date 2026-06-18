@@ -10,10 +10,30 @@ const body = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", 
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--f-mono" });
 const serif = Newsreader({ subsets: ["latin"], weight: ["500", "600"], style: ["normal", "italic"], variable: "--f-serif" });
 
+const SITE_URL = "https://axelicisnero.com";
+const SITE_DESC =
+  "Axel Cisnero · Especialista en Infraestructura TI y Desarrollador de Software. Más de una década en tecnología empresarial, redes, MDM y agentes de IA.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Axel Cisnero — Hoja de Vida",
-  description:
-    "Axel Cisnero · Business Solution Analyst y Desarrollador de Software. Experiencia en tecnología empresarial, redes, MDM y agentes de IA.",
+  description: SITE_DESC,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Axel Cisnero — Hoja de Vida",
+    description: SITE_DESC,
+    url: SITE_URL,
+    siteName: "Axel Cisnero",
+    locale: "es_PA",
+    type: "website",
+    images: [{ url: "/assets/axel.jpg", width: 800, height: 800, alt: "Axel Cisnero" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Axel Cisnero — Hoja de Vida",
+    description: SITE_DESC,
+    images: ["/assets/axel.jpg"],
+  },
 };
 
 // Evita el parpadeo de tema: aplica data-dark antes de pintar.
