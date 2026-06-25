@@ -18,7 +18,6 @@ export default async function Home() {
       {/* ============ NAV ============ */}
       <nav className="nav" id="nav">
         <div className="nav-inner">
-          <a href="#hero" className="brand">Axel Cisnero<span className="dot">.</span></a>
           <div className="nav-links">
             <a href="#perfil" data-en="Profile">Perfil</a>
             <a href="#experiencia" data-en="Experience">Experiencia</a>
@@ -58,7 +57,6 @@ export default async function Home() {
       <header className="hero" id="hero">
         <div className="wrap hero-grid">
           <div className="hero-copy">
-            <div className="hero-status" data-en="Available for new challenges · Panama City">Disponible para nuevos retos · Ciudad de Panamá</div>
             <h1>Axel<br /><span className="last">Cisnero</span></h1>
             <div className="hero-role">
               <span data-en="IT Infrastructure Specialist">Especialista en Infraestructura TI</span>
@@ -401,7 +399,6 @@ export default async function Home() {
       {/* ============ FOOTER ============ */}
       <footer className="footer">
         <div className="wrap footer-inner">
-          <a href="#hero" className="brand">Axel Cisnero<span className="dot">.</span></a>
           <small>© <span id="year"></span> Axel Cisnero · <span data-en="All rights reserved">Todos los derechos reservados</span></small>
           <div className="footer-links">
             <a href="https://www.linkedin.com/in/acisnero/" target="_blank" rel="noopener">LinkedIn</a>

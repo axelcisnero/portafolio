@@ -157,7 +157,7 @@ button { font-family: inherit; }
   position: relative;
 }
 .nav-links a:hover { color: var(--ink); }
-.nav-tools { display: flex; align-items: center; gap: 10px; }
+.nav-tools { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 
 .toggle { display: inline-flex; border: 1px solid var(--line-strong); }
 .toggle button {
