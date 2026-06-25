@@ -16,11 +16,11 @@ const SITE_DESC =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Axel Cisnero — Hoja de Vida",
+  title: "Axel Cisnero · Hoja de Vida",
   description: SITE_DESC,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Axel Cisnero — Hoja de Vida",
+    title: "Axel Cisnero · Hoja de Vida",
     description: SITE_DESC,
     url: SITE_URL,
     siteName: "Axel Cisnero",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Axel Cisnero — Hoja de Vida",
+    title: "Axel Cisnero · Hoja de Vida",
     description: SITE_DESC,
     images: ["/assets/axel.jpg"],
   },

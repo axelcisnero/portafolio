@@ -12,7 +12,7 @@ async function main() {
         catEn: "IT Solutions",
         url: "https://hardsoftsc.com",
         desc: "Sitio web corporativo para un proveedor de soluciones tecnológicas: servicios, marca y captación de clientes.",
-        descEn: "Corporate website for a technology solutions provider — services, branding and lead capture.",
+        descEn: "Corporate website for a technology solutions provider: services, branding and lead capture.",
       },
     });
     await prisma.project.create({
@@ -22,7 +22,7 @@ async function main() {
         catEn: "Logistics & Freight",
         url: "https://tempocargo.com",
         desc: "Sitio web para una empresa de carga y logística: servicios, cobertura y contacto para operaciones de carga.",
-        descEn: "Website for a freight and logistics company — services, coverage and contact for cargo operations.",
+        descEn: "Website for a freight and logistics company: services, coverage and contact for cargo operations.",
       },
     });
     await prisma.project.create({
@@ -32,7 +32,7 @@ async function main() {
         catEn: "Corporate",
         url: "https://mrobsa.com",
         desc: "Sitio web corporativo: presentación de la empresa, sus servicios y datos de contacto.",
-        descEn: "Corporate website — clean presentation of the company, its services and contact details.",
+        descEn: "Corporate website: clean presentation of the company, its services and contact details.",
       },
     });
     console.log("✔ Proyectos de ejemplo creados");
@@ -45,7 +45,7 @@ async function main() {
         loc: "New York, USA",
         stars: 5,
         text: "Una experiencia eléctrica y abrumadora; la energía de la ciudad nunca se detiene. Hay que verlo al menos una vez.",
-        textEn: "An overwhelming, electric experience — the energy of the city never stops. A must-see at least once.",
+        textEn: "An overwhelming, electric experience; the energy of the city never stops. A must-see at least once.",
       },
     });
     await prisma.review.create({
