@@ -31,22 +31,30 @@ function fileToResizedDataURL(file: File, maxW = 1000): Promise<string> {
   });
 }
 
+const STR = {
+  es: { upload: "Subir imagen", busy: "Procesando…", remove: "Quitar", url: "…o pega una URL" },
+  en: { upload: "Upload image", busy: "Processing…", remove: "Remove", url: "…or paste a URL" },
+};
+
 export function ImageField({
   name,
   defaultValue,
   label = "Imagen",
   maxW = 1000,
   round = false,
+  lang = "es",
 }: {
   name: string;
   defaultValue?: string | null;
   label?: string;
   maxW?: number;
   round?: boolean;
+  lang?: "es" | "en";
 }) {
   const [value, setValue] = useState<string>(defaultValue ?? "");
   const [busy, setBusy] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+  const s = STR[lang];
 
   const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
@@ -85,17 +93,17 @@ export function ImageField({
         <div className="img-field-controls">
           <input ref={fileRef} type="file" accept="image/*" hidden onChange={onFile} />
           <button type="button" className="btn btn-ghost sm" onClick={() => fileRef.current?.click()} disabled={busy}>
-            {busy ? "Procesando…" : "Subir imagen"}
+            {busy ? s.busy : s.upload}
           </button>
           {value && (
             <button type="button" className="btn btn-ghost sm danger" onClick={() => setValue("")}>
-              Quitar
+              {s.remove}
             </button>
           )}
           <input
             className="img-field-url"
             type="url"
-            placeholder="…o pega una URL"
+            placeholder={s.url}
             value={value.startsWith("data:") ? "" : value}
             onChange={(e) => setValue(e.target.value)}
           />
