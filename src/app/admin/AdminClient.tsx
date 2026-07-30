@@ -5,6 +5,7 @@ import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { ImageField } from "@/components/ImageField";
 import { upsertReview, deleteReview, upsertProject, deleteProject, setProfileImage } from "./actions";
+import { RifaAdmin } from "./RifaAdmin";
 
 interface ReviewRow {
   id: string;
@@ -134,7 +135,7 @@ export function AdminClient({
   projects: ProjectRow[];
   profileImage: string | null;
 }) {
-  const [tab, setTab] = useState<"reviews" | "projects">("reviews");
+  const [tab, setTab] = useState<"reviews" | "projects" | "rifa">("reviews");
   const [editReview, setEditReview] = useState<ReviewRow | null>(null);
   const [editProject, setEditProject] = useState<ProjectRow | null>(null);
   const [lang, setLang] = useState<Lang>("es");
@@ -203,9 +204,12 @@ export function AdminClient({
         <button className={tab === "projects" ? "on" : ""} onClick={() => setTab("projects")}>
           {t.projects} ({projects.length})
         </button>
+        <button className={tab === "rifa" ? "on" : ""} onClick={() => setTab("rifa")}>
+          Rifa
+        </button>
       </div>
 
-      {tab === "reviews" ? (
+      {tab === "reviews" && (
         <div className="admin-grid">
           <section className="admin-form">
             <h2>{editReview ? t.editReviewT : t.newReview}</h2>
@@ -266,7 +270,8 @@ export function AdminClient({
             ))}
           </div>
         </div>
-      ) : (
+      )}
+      {tab === "projects" && (
         <div className="admin-grid">
           <section className="admin-form">
             <h2>{editProject ? t.editProjectT : t.newProject}</h2>
@@ -333,6 +338,7 @@ export function AdminClient({
           </div>
         </div>
       )}
+      {tab === "rifa" && <RifaAdmin />}
     </main>
   );
 }

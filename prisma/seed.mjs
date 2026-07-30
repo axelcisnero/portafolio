@@ -1,4 +1,6 @@
-// Datos iniciales basados en tu plantilla. Puedes editarlos o borrarlos desde /admin.
+// Datos iniciales. Solo se crean proyectos de ejemplo si la tabla esta vacia.
+// Las resenas NO se siembran: se gestionan desde /admin (antes reaparecian en
+// cada arranque del contenedor).
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -36,37 +38,6 @@ async function main() {
       },
     });
     console.log("✔ Proyectos de ejemplo creados");
-  }
-
-  if ((await prisma.review.count()) === 0) {
-    await prisma.review.create({
-      data: {
-        place: "Times Square",
-        loc: "New York, USA",
-        stars: 5,
-        text: "Una experiencia eléctrica y abrumadora; la energía de la ciudad nunca se detiene. Hay que verlo al menos una vez.",
-        textEn: "An overwhelming, electric experience; the energy of the city never stops. A must-see at least once.",
-      },
-    });
-    await prisma.review.create({
-      data: {
-        place: "Casco Antiguo",
-        loc: "Panamá",
-        stars: 5,
-        text: "Historia, arquitectura y buena comida en cada esquina. Perfecto para caminar al atardecer.",
-        textEn: "History, architecture and great food in every corner. Perfect for an evening walk.",
-      },
-    });
-    await prisma.review.create({
-      data: {
-        place: "Bocas del Toro",
-        loc: "Panamá",
-        stars: 4,
-        text: "Playas caribeñas y un ambiente relajado. Ideal para desconectarse unos días.",
-        textEn: "Caribbean beaches and a relaxed vibe. Ideal to disconnect for a few days.",
-      },
-    });
-    console.log("✔ Reseñas de ejemplo creadas");
   }
 }
 

@@ -16,11 +16,36 @@ const SITE_DESC =
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Axel Cisnero · Hoja de Vida",
+  title: {
+    default: "Axel Cisnero · Infraestructura TI y Desarrollo de Software",
+    template: "%s · Axel Cisnero",
+  },
   description: SITE_DESC,
+  keywords: [
+    "Axel Cisnero",
+    "Infraestructura TI",
+    "Especialista en TI Panamá",
+    "Desarrollador de Software Panamá",
+    "Soporte técnico empresarial",
+    "Redes y comunicaciones",
+    "MDM",
+    "Agentes de IA",
+    "Ciberseguridad",
+    "Desarrollo web",
+    "Consultor de tecnología",
+  ],
+  authors: [{ name: "Axel Cisnero", url: SITE_URL }],
+  creator: "Axel Cisnero",
+  publisher: "Axel Cisnero",
+  category: "technology",
   alternates: { canonical: "/" },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+  },
   openGraph: {
-    title: "Axel Cisnero · Hoja de Vida",
+    title: "Axel Cisnero · Infraestructura TI y Desarrollo de Software",
     description: SITE_DESC,
     url: SITE_URL,
     siteName: "Axel Cisnero",
@@ -30,10 +55,46 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Axel Cisnero · Hoja de Vida",
+    title: "Axel Cisnero · Infraestructura TI y Desarrollo de Software",
     description: SITE_DESC,
     images: ["/assets/axel.jpg"],
   },
+};
+
+// Datos estructurados (JSON-LD): ayudan a Google a entender quién eres y a
+// mostrarte en resultados enriquecidos (perfil profesional + contacto).
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: "Axel Cisnero",
+      url: SITE_URL,
+      image: `${SITE_URL}/assets/axel.jpg`,
+      jobTitle: "Especialista en Infraestructura TI y Desarrollador de Software",
+      email: "mailto:axel.cisnero@hotmail.com",
+      sameAs: ["https://github.com/axelcisnero", "https://www.linkedin.com/in/acisnero/"],
+      address: { "@type": "PostalAddress", addressCountry: "PA" },
+      knowsAbout: [
+        "Infraestructura TI",
+        "Redes y comunicaciones",
+        "MDM",
+        "Desarrollo de Software",
+        "Agentes de IA",
+        "Ciberseguridad",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Axel Cisnero",
+      description: SITE_DESC,
+      publisher: { "@id": `${SITE_URL}/#person` },
+      inLanguage: "es-PA",
+    },
+  ],
 };
 
 // Evita el parpadeo de tema: aplica data-dark antes de pintar.
@@ -51,6 +112,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         className={`${display.variable} ${body.variable} ${mono.variable} ${serif.variable}`}
       >
         <head>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
           <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         </head>
         <body suppressHydrationWarning>{children}</body>
