@@ -3,12 +3,15 @@
 import { useEffect } from "react";
 
 /**
- * Replica las interacciones del app.js original de la plantilla:
- * nav scroll, menú móvil, estrellas, reveal, i18n ES/EN, tema y formulario.
- * Se ejecuta tras la hidratación sobre el DOM ya renderizado.
+ * Interacciones del CV: nav scroll, menú móvil, estrellas, miniaturas, reveal,
+ * idioma (navegación ES/EN), tema y formulario. Se ejecuta tras la hidratación.
+ * El idioma ahora es por ruta (/ = español, /en = inglés), server-rendered.
  */
-export function CVScripts() {
+export function CVScripts({ lang = "es" }: { lang?: "es" | "en" }) {
   useEffect(() => {
+    /* ---------- idioma del documento ---------- */
+    document.documentElement.lang = lang;
+
     /* ---------- año ---------- */
     const y = document.getElementById("year");
     if (y) y.textContent = String(new Date().getFullYear());
@@ -80,42 +83,17 @@ export function CVScripts() {
       document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
     }
 
-    /* ---------- i18n ES/EN ---------- */
-    const I18N_KEY = "cv-axel-lang";
-    document.querySelectorAll<HTMLElement>("[data-en]").forEach((el) => {
-      el.setAttribute("data-es", el.innerHTML);
-    });
-    document.querySelectorAll<HTMLElement>("[data-en-ph]").forEach((el) => {
-      el.setAttribute("data-es-ph", el.getAttribute("placeholder") || "");
-    });
-    const setLang = (lang: string) => {
-      const en = lang === "en";
-      document.documentElement.lang = en ? "en" : "es";
-      document.querySelectorAll<HTMLElement>("[data-en]").forEach((el) => {
-        el.innerHTML = en ? el.getAttribute("data-en") || "" : el.getAttribute("data-es") || "";
-      });
-      document.querySelectorAll<HTMLElement>("[data-en-ph]").forEach((el) => {
-        el.setAttribute("placeholder", en ? el.getAttribute("data-en-ph") || "" : el.getAttribute("data-es-ph") || "");
-      });
-      document.querySelectorAll<HTMLElement>("#langToggle button").forEach((b) => {
-        b.classList.toggle("active", b.getAttribute("data-lang") === lang);
-      });
-      try {
-        localStorage.setItem(I18N_KEY, lang);
-      } catch {}
-    };
+    /* ---------- idioma (navegación ES/EN) ---------- */
     const langBtns = document.querySelectorAll<HTMLElement>("#langToggle button");
     const langHandlers: Array<[HTMLElement, () => void]> = [];
     langBtns.forEach((b) => {
-      const h = () => setLang(b.getAttribute("data-lang") || "es");
+      const h = () => {
+        const l = b.getAttribute("data-lang");
+        window.location.href = l === "en" ? "/en" : "/";
+      };
       b.addEventListener("click", h);
       langHandlers.push([b, h]);
     });
-    let savedLang = "es";
-    try {
-      savedLang = localStorage.getItem(I18N_KEY) || "es";
-    } catch {}
-    if (savedLang === "en") setLang("en");
 
     /* ---------- tema claro / oscuro ---------- */
     const THEME_KEY = "cv-axel-theme";
@@ -152,7 +130,7 @@ export function CVScripts() {
     const onSubmit = (e: Event) => {
       e.preventDefault();
       if (!form) return;
-      const isEN = document.documentElement.lang === "en";
+      const isEN = lang === "en";
       const data = {
         nombre: (form.elements.namedItem("nombre") as HTMLInputElement)?.value.trim() || "",
         email: (form.elements.namedItem("email") as HTMLInputElement)?.value.trim() || "",
@@ -180,7 +158,7 @@ export function CVScripts() {
       form?.removeEventListener("submit", onSubmit);
       io?.disconnect();
     };
-  }, []);
+  }, [lang]);
 
   return null;
 }
