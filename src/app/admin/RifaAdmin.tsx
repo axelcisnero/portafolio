@@ -58,6 +58,17 @@ export function RifaAdmin() {
     setBusy(false);
   };
 
+  const resend = async () => {
+    if (!confirm("¿Enviar la confirmación por WhatsApp a TODOS los participantes actuales? Úsalo cuando las plantillas ya estén aprobadas.")) return;
+    setBusy(true);
+    const res = await call("/resend-confirmations", { method: "POST" });
+    const d = await res.json().catch(() => ({}));
+    setBusy(false);
+    if (d.ok) alert(`Confirmaciones enviadas: ${d.sent} · Fallidas: ${d.failed} (de ${d.total}).`);
+    else alert("Error: " + (d.error || res.status));
+    load();
+  };
+
   if (loading) return <p className="admin-empty">Cargando rifa…</p>;
   if (error) return <p className="admin-empty">{error}</p>;
   if (!data) return null;
@@ -182,6 +193,14 @@ export function RifaAdmin() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="admin-form" style={{ marginTop: 16 }}>
+        <h2>Mensajes</h2>
+        <p className="admin-hint">Reenvía la confirmación por WhatsApp a todos los que ya reservaron (con sus números y monto). Úsalo una vez cuando Meta apruebe las plantillas, para avisar a quienes compraron antes de la aprobación.</p>
+        <button className="btn btn-line sm" disabled={busy} onClick={resend}>
+          Reenviar confirmación a todos
+        </button>
       </div>
 
       <div className="admin-form" style={{ marginTop: 16 }}>
