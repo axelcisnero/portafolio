@@ -59,12 +59,12 @@ export function RifaAdmin() {
   };
 
   const resend = async () => {
-    if (!confirm("¿Enviar la confirmación por WhatsApp a TODOS los participantes actuales? Úsalo cuando las plantillas ya estén aprobadas.")) return;
+    if (!confirm("¿Enviar la confirmación por WhatsApp a quienes AÚN no la han recibido? A los que ya la recibieron NO se les reenvía (para no gastar mensajes de más).")) return;
     setBusy(true);
     const res = await call("/resend-confirmations", { method: "POST" });
     const d = await res.json().catch(() => ({}));
     setBusy(false);
-    if (d.ok) alert(`Confirmaciones enviadas: ${d.sent} · Fallidas: ${d.failed} (de ${d.total}).`);
+    if (d.ok) alert(`Enviadas: ${d.sent}\nYa la tenían (omitidos): ${d.skipped}\nFallidas: ${d.failed}`);
     else alert("Error: " + (d.error || res.status));
     load();
   };
@@ -197,9 +197,9 @@ export function RifaAdmin() {
 
       <div className="admin-form" style={{ marginTop: 16 }}>
         <h2>Mensajes</h2>
-        <p className="admin-hint">Reenvía la confirmación por WhatsApp a todos los que ya reservaron (con sus números y monto). Úsalo una vez cuando Meta apruebe las plantillas, para avisar a quienes compraron antes de la aprobación.</p>
+        <p className="admin-hint">Envía la confirmación por WhatsApp a quienes reservaron pero <strong>aún no la recibieron</strong> (con sus números y monto). A los que ya la tienen no se les reenvía, así no gastas mensajes de más.</p>
         <button className="btn btn-line sm" disabled={busy} onClick={resend}>
-          Reenviar confirmación a todos
+          Enviar confirmación a los pendientes
         </button>
       </div>
 
